@@ -1,45 +1,65 @@
 const todoList = () => {
-    all = []
+    let all = []
+  
     const add = (todoItem) => {
-      all.push(todoItem)
+        all.push(todoItem)
     }
+  
     const markAsComplete = (index) => {
-      all[index].completed = true
+        all[index].completed = true
     }
   
     const overdue = () => {
-        return all.filter((todo) => todo.dueDate < today);
+        const ans_overdue = []
+        for(let i=0; i<all.length; i++){
+            if(all[i].dueDate < today){
+                ans_overdue.push(all[i]); // Push the todo item, not the index
+            }
+        }
+        return ans_overdue;
     }
   
     const dueToday = () => {
-        return all.filter((todo) => todo.dueDate == today);
+        const ans_duetoday = []
+        for(let i=0; i<all.length; i++){
+            if(all[i].dueDate === today){
+                ans_duetoday.push(all[i]); // Push the todo item
+            }
+        }
+        return ans_duetoday;
     }
   
     const dueLater = () => {
-        return all.filter((todo) => todo.dueDate > today);
+        const ans_duelater = []
+        for(let i=0; i<all.length; i++){
+            if(all[i].dueDate > today){
+                ans_duelater.push(all[i]); // Push the todo item
+            }
+        }
+        return ans_duelater;
     }
   
     const toDisplayableList = (list) => {
-        return list
-        .map(
-          (todo) =>
-            `${todo.completed ? "[x]" : "[ ]"} ${todo.title} ${todo.dueDate == today ? "" : todo.dueDate
-            }`
-        )
-        .join("\n");
+        let output = "";
+        for(let i=0; i<list.length; i++){
+            let checkbox = list[i].completed ? "[x]" : "[ ]";
+            let displayDate = list[i].dueDate === today ? "" : list[i].dueDate;
+            output += `${checkbox} ${list[i].title} ${displayDate}\n`;
+        }
+        return output.trim();
     }
   
     return {
-      all,
-      add,
-      markAsComplete,
-      overdue,
-      dueToday,
-      dueLater,
-      toDisplayableList
+        all,
+        add,
+        markAsComplete,
+        overdue,
+        dueToday,
+        dueLater,
+        toDisplayableList
     };
 };
-  
+
 // ####################################### #
 // DO NOT CHANGE ANYTHING BELOW THIS LINE. #
 // ####################################### #
@@ -51,8 +71,8 @@ const formattedDate = d => {
 }
 
 var dateToday = new Date()
-    const today = formattedDate(dateToday)
-    const yesterday = formattedDate(
+const today = formattedDate(dateToday)
+const yesterday = formattedDate(
     new Date(new Date().setDate(dateToday.getDate() - 1))
 )
 const tomorrow = formattedDate(
